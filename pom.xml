@@ -14,7 +14,7 @@
     <name>HerokuAPI001</name>
     <description>HerokuAPI001</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
     </properties>
     <dependencies>
         <dependency>

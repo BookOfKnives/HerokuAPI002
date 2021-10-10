@@ -17,7 +17,7 @@ public class PenControllerClass {
 
     @GetMapping(value={"/index", "/", "/first"}) @ResponseBody
     public String first() {
-        return "hello world, yall hjul";
+        return "hello world, yall hjul, velkommen til Pen Server";
     }
     @GetMapping("/pen") public Iterable<PenModelClass> pens() {
         return penRepositoryClassInstance.findAll();
@@ -39,23 +39,8 @@ public class PenControllerClass {
         else return "Pen Not created succesful.";
     }
 
-    //abandoned attempt at patch
-//    @PatchMapping("/pens/{id}")
-//    public ResponseEntity<PenModelClass> updatePenPartially(
-//            @PathVariable Long id,
-//            @RequestBody PenModelClass penDetails)
-//           // throws ResourceNotFoundException
-//    {
-//        PenModelClass tempPenFetchedFromRepository = penRepositoryClassInstance.findById(id)
-//                //.orElseThrow(() -> new ResourceNotFoundException("Pen not found on :: "+ id));
-//                .orElse(ResponseEntity.badRequest(penDetails));
-//
-//        tempPenFetchedFromRepository.setColor(penDetails.getColor());
-//        PenModelClass updatedPen = penRepositoryClassInstance.save(tempPenFetchedFromRepository);
-//        return ResponseEntity.ok(updatedPen);
-//    }
     @PatchMapping("/pens/{id}")
-    public String patchGalleryById(@PathVariable Long id, @RequestBody PenModelClass penToUpdateWith) {
+    public String patchPenById(@PathVariable Long id, @RequestBody PenModelClass penToUpdateWith) {
         return penRepositoryClassInstance.findById(id).map(foundPen -> {
             if (penToUpdateWith.getPenName() != null) foundPen.setPenName(penToUpdateWith.getPenName());
             if (penToUpdateWith.getColor() != null) foundPen.setColor(penToUpdateWith.getColor());
@@ -63,5 +48,13 @@ public class PenControllerClass {
             penRepositoryClassInstance.save(foundPen);
             return "Penalhus updated";
         }).orElse("Penalhus not found");
+    }
+    @DeleteMapping("/pens/{id}")
+    public String deletePenById(@PathVariable Long id) {
+        if (penRepositoryClassInstance.existsById(id)) {
+            penRepositoryClassInstance.deleteById(id);
+            return "Pen Delete succesful at id: " + id;
+        }
+        return "Pen delete not succesful.";
     }
 }

@@ -19,4 +19,30 @@ public class PenModelClass {
     @Column
     private String color;
 
+    public PenModelClass() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getPenName() {
+        return penName;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setPenName(String penName) {
+        this.penName = penName;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 }
